@@ -25,6 +25,8 @@ const LoginPage = (props) => {
         try{
             await authAPI.authenticate(credentials)
             setError("")
+            props.onLogin(true)
+            props.history.replace("/customers")
         }catch(error){
             setError("Aucun compte ne possède cette adresse e-mail ou les informations ne correspond pas")
         }
@@ -45,8 +47,11 @@ const LoginPage = (props) => {
                                 placeholder="Adresse E-mail de connexion"
                                 id="username"
                                 name="username"
-                                className="form-control"
+                                className={"form-control" + (error && " is-invalid")}
                             />
+                            {error && (
+                                <p className="invalid-feedback">{error}</p>
+                            )}
                         </div>
                         <div className="form-group">
                             <label htmlFor="password">Mot de passe</label>
