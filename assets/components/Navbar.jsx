@@ -1,12 +1,16 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {NavLink} from "react-router-dom"
+import AuthContext from '../contexts/AuthContext';
 import authAPI from "../services/authAPI"
+
 
 const Navbar = (props) => {
 
+    const {isAuthenticated, setIsAuthenticated} = useContext(AuthContext)
+
     const handleLogout = () => {
         authAPI.logout()
-        props.onLogout(false)
+        setIsAuthenticated(false)
         props.history.push("/login")
     }
 
@@ -27,7 +31,7 @@ const Navbar = (props) => {
                     </li>
                 </ul>
                 <ul className="navbar-nav ml-auto">
-                    {(!props.isAuthenticated)? (
+                    {(!isAuthenticated)? (
                         <>
                        <li className="nav-item">
                         <NavLink to="#" className="nav-link">Inscription</NavLink>

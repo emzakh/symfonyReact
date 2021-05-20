@@ -1,7 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
+import AuthContext from '../contexts/AuthContext';
 import authAPI from '../services/authAPI'
 
 const LoginPage = (props) => {
+
+    const {setIsAuthenticated} = useContext(AuthContext)
 
     const [credentials, setCredentials] = useState({
         username: "",
@@ -25,7 +28,7 @@ const LoginPage = (props) => {
         try{
             await authAPI.authenticate(credentials)
             setError("")
-            props.onLogin(true)
+            setIsAuthenticated(true)
             props.history.replace("/customers")
         }catch(error){
             setError("Aucun compte ne possède cette adresse e-mail ou les informations ne correspond pas")
